@@ -8,13 +8,8 @@ function App() {
   return (
     <div className="App">
       <Navbar/>
-<<<<<<< HEAD
-      <Card/>
-      <Footer/>
-=======
       {/* <Card/> */}
       {/* <Footer/> */}
->>>>>>> de761fd (cart added)
     </div>
   );
 }
