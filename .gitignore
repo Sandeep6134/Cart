@@ -3,6 +3,10 @@
 # dependencies
 /node_modules
 /.pnp
+<<<<<<< HEAD
+=======
+package-lock.json
+>>>>>>> de761fd (cart added)
 .pnp.js
 
 # testing
