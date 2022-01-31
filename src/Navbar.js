@@ -1,35 +1,76 @@
-import React from "react";
+import * as React from 'react';
 import "./App.css";
 import image from "./image.jpeg";
+import CardComponent from "./Cart.js";
+// import Button from '@mui/material/Button';
+// import Menu from '@mui/material/Menu';
+// import React, {useState, useEffect} from 'react';
+// import Cart1 from "./Cart.js";
+// import {link} from "react-router-dom";
 
 class Navbar extends React.Component {
-  state = { a: 0, cart: [] };
+
+  state = { a: 0, cart: [],toggleCard:true ,
+    
+    cartitem:[]
+    
+
+
+};
+
+  
+
+  
+ 
   
   
 
   render() {
-    const increment = (item) => {
+
+    // const [toggleCounterComponent, setToggleCounterComponent] = useState(true);
+    // const [toggleCard, setToggleCard] = useState(true);
+    // const [anchorEl, setAnchorEl] = React.useState(null);
+  // const open = Boolean(anchorEl);
+
+    const toggleFunctionality = () => {
+      this.setState({toggleCard:!this.state.toggleCard});
+   
+  }
+    
+
+  //Incrementing and pushing the values into array of objects
+    const increment1 = (item,price,name) => {
      
       // let temp = this.state.cart;
-      this.state.cart.push(item);
 
+      this.state.cartitem.push({id:item,name:name,price:price})
+      this.state.cart.push(item);
       this.setState({ a: this.state.a + 1});
       
     };
-    const decrement = (item1) => {
+
+    //Decrementing the cart value and removing the particular item from array of object
+    const decrement1 = (item1,price,name) => {
       // a++;
       let temp = this.state.cart;
-      // console.log(temp)
+      
+      let temp1=this.state.cartitem
       temp.splice(temp.indexOf(item1),1);
+      temp1.splice(temp1.indexOf(item1),1);
 
-      this.setState({ a: this.state.a - 1, cart: temp });
-      //  var k=this.state
-      // console.log("enters",k)
+      this.setState({ a: this.state.a - 1, cart: temp,cartitem: temp1});
+      
     };
 
-    console.log(this.state.cart)
+    
 
-    return (
+    const toggleComponent = (valueFromChild) => {
+      this.setState({toggleCard:!this.state.toggleCard})
+    }
+
+    console.log(this.state.cartitem)
+
+    return (  
       <div>
         {/* {this.state.a} */}
         {/* class="navbar navbar-expand-lg navbar-light bg-light" */}
@@ -90,11 +131,30 @@ class Navbar extends React.Component {
 
               <ul class="navbar-nav ml-auto" id="navbarToggleExternalContent">
                 <li class="nav-item active ">
-                  <button className="button1">
-                    {" "}
-                    <i class="bi bi-cart-fill"></i> Cart{" "}
+                <div class="dropdown">
+
+                {/* <Button className="button1"
+        id="basic-button"
+        aria-controls={this.state.toggleCard ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={this.state.toggleCard ? 'true' : undefined}
+        onClick={() => toggleFunctionality()}
+      >
+       <i class="bi bi-cart-fill"></i> Cart
+                    <span class="zero">{this.state.a}</span>
+      </Button> */}
+      
+                  <button className="button1" onClick={() => toggleFunctionality()}>
+                    
+                    <i class="bi bi-cart-fill"></i> Cart
                     <span class="zero">{this.state.a}</span>
                   </button>
+                  {!this.state.toggleCard ? 
+                    
+                   < CardComponent heading="NAME" subheading="PRICE" 
+                     description="Total Price of this product is more than expected" CartDisplay={this.state.cartitem} 
+                   toggleFunctionality={(t)=> toggleComponent(t)}/> : <></>}
+                 </div>
                 </li>
               </ul>
             </div>
@@ -123,7 +183,7 @@ class Navbar extends React.Component {
               </div>
             </div>
 
-            <div className="col mb-5">
+            <div className="col mb-5 ">
               <div class="card">
                 <div class="badge bg-dark text-white position-absolute pos">
                   Sale
@@ -139,11 +199,11 @@ class Navbar extends React.Component {
                   </p>
 
                   {this.state.cart.includes(1) ? (
-                    <button class="btn button1" onClick={() => decrement(1)}>
+                    <button class="btn button1" onClick={() => decrement1(1,18,"specialitem")}>
                       Remove from cart
                     </button>
                   ) : (
-                    <button class="btn button1" onClick={() => increment(1)}>
+                    <button class="btn button1" onClick={() => increment1(1,18,"specialitem")}>
                       Add to cart
                     </button>
                   )}
@@ -164,11 +224,11 @@ class Navbar extends React.Component {
                   </p>
 
                   {this.state.cart.includes(2) ? (
-                    <button class="btn button1" onClick={() => decrement(2)}>
+                    <button class="btn button1" onClick={() => decrement1(2,25,"Sale Item1")}>
                       Remove from cart
                     </button>
                   ) : (
-                    <button class="btn button1" onClick={() => increment(2)}>
+                    <button class="btn button1" onClick={() => increment1(2,25,"Sale Item1")}>
                       Add to cart
                     </button>
                   )}
@@ -188,11 +248,11 @@ class Navbar extends React.Component {
                   <p>$40.00</p>
 
                   {this.state.cart.includes(3) ? (
-                    <button class="btn button1" onClick={() => decrement(3)}>
+                    <button class="btn button1" onClick={() => decrement1(3,40,"Popular item")}>
                       Remove from cart
                     </button>
                   ) : (
-                    <button class="btn button1" onClick={() => increment(3)}>
+                    <button class="btn button1" onClick={() => increment1(3,40,"poppular item")}>
                       Add to cart
                     </button>
                   )}
@@ -212,11 +272,11 @@ class Navbar extends React.Component {
                     <strike>$50.00</strike> $25.00
                   </p>
                   {this.state.cart.includes(4) ? (
-                    <button class="btn button1" onClick={() => decrement(4)}>
+                    <button class="btn button1" onClick={() => decrement1(4,25,"sale item")}>
                       Remove from cart
                     </button>
                   ) : (
-                    <button class="btn button1" onClick={() => increment(4)}>
+                    <button class="btn button1" onClick={() => increment1(4,25,"sale item")}>
                       Add to cart
                     </button>
                   )}
@@ -255,11 +315,11 @@ class Navbar extends React.Component {
                   </p>
 
                   {this.state.cart.includes(6) ? (
-                    <button class="btn button1" onClick={() => decrement(6)}>
+                    <button class="btn button1" onClick={() => decrement1(6,18,"Special Item")}>
                       Remove from cart
                     </button>
                   ) : (
-                    <button class="btn button1" onClick={() => increment(6)}>
+                    <button class="btn button1" onClick={() => increment1(6,18,"Special Item")}>
                       Add to cart
                     </button>
                   )}
@@ -279,11 +339,11 @@ class Navbar extends React.Component {
                   <p>$40.00</p>
 
                   {this.state.cart.includes(7) ? (
-                    <button class="btn button1" onClick={() => decrement(7)}>
+                    <button class="btn button1" onClick={() => decrement1(7,40,"popular item")}>
                       Remove from cart
                     </button>
                   ) : (
-                    <button class="btn button1" onClick={() => increment(7)}>
+                    <button class="btn button1" onClick={() => increment1(7,40,"popular item")}>
                       Add to cart
                     </button>
                   )}
